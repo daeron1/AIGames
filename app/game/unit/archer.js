@@ -63,6 +63,14 @@ define([
                 }
                 return true;
             }
+        },
+
+        die: function () {
+            var self = this;
+            var dieAnimation = 'die';
+            return function () {
+                self.sprite.animations.play(dieAnimation, 8, false);
+            }
         }
 
     };
