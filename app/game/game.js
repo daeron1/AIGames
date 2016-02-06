@@ -3,18 +3,17 @@
 define([
     'phaser',
     '../helpers/utils',
-    './map/map'
-], function (Phaser, utils, Map) {
+    './map/map',
+    './params'
+], function (Phaser, utils, Map, params) {
 
-    function Game(barriers, steps) {
-        this.barriers = utils.copy(barriers);
-        this.steps = [];//utils.copy(steps);
+    function Game() {
     }
 
     Game.prototype = {
         constructor: Game,
 
-        start: function() {
+        start: function () {
             this.game = new Phaser.Game(800, 556, Phaser.AUTO, '#game', {
                 preload: this.preload,
                 create: this.create,
@@ -28,30 +27,26 @@ define([
         },
 
         create: function () {
-            this.map.reload();
+            this.map.reload(params.barriers);
             this.actions = [];
             var self = this;
-
-            this.steps = [
-                {
-                    object: 'archer2',
-                    action: 'move',
-                    target: {y: 4, x: 4}
-                }
-            ];
-
-            this.steps.forEach(function (step) {
+            params.steps.forEach(function (step) {
                 var action = self.map.units[step.object][step.action](step.target);
                 self.actions.push(action);
             });
 
-            this.do = true;
+            this.play = true;
+            this.currentAction = null;
         },
 
         update: function () {
-            var action = this.actions[0];
-            if (this.do) {
-                this.do = action();
+            if (this.play && this.currentAction != null) {
+                this.play = this.currentAction();
+            } else {
+                if (this.actions.length != 0) {
+                    this.currentAction = this.actions.shift();
+                    this.play = true;
+                }
             }
         }
     };

@@ -45,8 +45,20 @@ define([
         throw new Error("Unable to copy obj! Its type isn't supported.");
     };
 
-    utils.eq = function (a, b) {
-        return Math.abs(b - a) < 20;
+    utils.getSteps = function (from, to) {
+        var x = Math.abs(from.getX() - to.getX());
+        var y = Math.abs(from.getY() - to.getY());
+        var d = Math.sqrt(x * x + y * y);
+        return Math.round(d) * 50;
+    }
+
+    utils.getDirection = function (y, x) {
+        var tan = Math.abs(y) / Math.abs(x);
+        if (tan > 1) {
+            return y > 0 ? 'Down' : 'Up';
+        } else {
+            return x > 0 ? 'Right' : 'Left';
+        }
     };
 
     return utils;
