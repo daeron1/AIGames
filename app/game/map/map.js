@@ -4,8 +4,9 @@ define([
     '../../helpers/utils',
     './square',
     '../unit/archer',
+    '../unit/wizard',
     '../unit/tree'
-], function (utils, Square, Archer, Tree) {
+], function (utils, Square, Archer, Wizard, Tree) {
 
     function createEmptyBattlefield() {
         var battleField = [];
@@ -41,7 +42,9 @@ define([
 
             this.units = {
                 archer1: new Archer(this.game, this.getSquare(3, 1), 1),
-                archer2: new Archer(this.game, this.getSquare(3, 10), 2)
+                wizard1: new Wizard(this.game, this.getSquare(5, 1), 1),
+                archer2: new Archer(this.game, this.getSquare(3, 10), 2),
+                wizard2: new Wizard(this.game, this.getSquare(5, 10), 2)
             };
         },
 
@@ -50,6 +53,9 @@ define([
             this.game.load.image('tree', 'assets/tree.png');
             this.game.load.spritesheet('archer1', 'assets/archer1.png', 64, 64);
             this.game.load.spritesheet('archer2', 'assets/archer2.png', 64, 64);
+            this.game.load.spritesheet('wizard1', 'assets/wizard1.png', 64, 64);
+            this.game.load.spritesheet('wizard2', 'assets/wizard2.png', 64, 64);
+            this.game.load.spritesheet('fireball', 'assets/fireball.png', 64, 64);
             this.game.load.image('arrowLeft', 'assets/arrow_left.png');
             this.game.load.image('arrowRight', 'assets/arrow_right.png');
             this.game.load.image('arrowDown', 'assets/arrow_down.png');
