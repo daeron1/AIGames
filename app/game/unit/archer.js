@@ -10,14 +10,14 @@ define([
         this.game = game;
         this.square = square;
         this.team = team;
-        this.sprite = this.game.add.sprite(square.getXCoord(), square.getYCoord(), 'archer');
+        this.sprite = this.game.add.sprite(square.getXCoord(), square.getYCoord(), 'archer' + team);
         for (var key in animations) {
             if (animations.hasOwnProperty(key)) {
                 this.sprite.animations.add(key, animations[key]);
             }
         }
 
-        this.sprite.animations.play(team == 1 ? 'castRight' : 'moveLeft', 8, true);
+        this.sprite.animations.play(team == 1 ? 'stayArcherRight' : 'stayArcherLeft', 8, true);
     }
 
     Archer.prototype = {
@@ -30,7 +30,7 @@ define([
             var deltaY = (target.getYCoord() - this.square.getYCoord()) / steps;
             var direction = utils.getDirection(deltaY, deltaX);
             var moveAnimation = 'move' + direction;
-            var stayAnimation = 'stay' + direction;
+            var stayAnimation = 'stayArcher' + direction;
             this.square = target;
             return function () {
                 self.sprite.animations.play(moveAnimation, 8, true);
@@ -48,17 +48,27 @@ define([
         attack: function (point) {
             var self = this;
             var target = new Square(point.y, point.x);
-            var deltaX = target.getXCoord() - this.square.getXCoord();
-            var deltaY = target.getYCoord() - this.square.getYCoord();
             var steps = 70;
+            var arrowSteps = 50;
+            var deltaX = (target.getXCoord() - this.square.getXCoord()) / arrowSteps;
+            var deltaY = (target.getYCoord() - this.square.getYCoord()) / arrowSteps;
             var direction = utils.getDirection(deltaY, deltaX);
             var shootAnimation = 'shoot' + direction;
-            var stayAnimation = 'stay' + direction;
+            var stayAnimation = 'stayArcher' + direction;
+            var arrow = null;
             return function () {
                 self.sprite.animations.play(shootAnimation, 8, false);
                 steps--;
+                if (steps == 50) {
+                    arrow = self.game.add.sprite(self.square.getXCoord(), self.square.getYCoord() + 32, 'arrow' + direction);
+                }
+                if (steps < 50) {
+                    arrow.x += deltaX;
+                    arrow.y += deltaY;
+                }
                 if (steps == 0) {
                     self.sprite.animations.play(stayAnimation, 8, false);
+                    arrow.kill();
                     return false;
                 }
                 return true;

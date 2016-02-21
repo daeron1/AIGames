@@ -48,7 +48,12 @@ define([
         loadAssets: function () {
             this.game.load.image('terrain', 'assets/terrain.png');
             this.game.load.image('tree', 'assets/tree.png');
-            this.game.load.spritesheet('archer', 'assets/archer.png', 64, 64);
+            this.game.load.spritesheet('archer1', 'assets/archer1.png', 64, 64);
+            this.game.load.spritesheet('archer2', 'assets/archer2.png', 64, 64);
+            this.game.load.image('arrowLeft', 'assets/arrow_left.png');
+            this.game.load.image('arrowRight', 'assets/arrow_right.png');
+            this.game.load.image('arrowDown', 'assets/arrow_down.png');
+            this.game.load.image('arrowUp', 'assets/arrow_up.png');
         }
     };
 
