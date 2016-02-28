@@ -56,6 +56,7 @@ define([
             this.game.load.spritesheet('wizard1', 'assets/wizard1.png', 64, 64);
             this.game.load.spritesheet('wizard2', 'assets/wizard2.png', 64, 64);
             this.game.load.spritesheet('fireball', 'assets/fireball.png', 64, 64);
+            this.game.load.spritesheet('heal', 'assets/heal.png', 64, 64);
             this.game.load.image('arrowLeft', 'assets/arrow_left.png');
             this.game.load.image('arrowRight', 'assets/arrow_right.png');
             this.game.load.image('arrowDown', 'assets/arrow_down.png');

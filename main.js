@@ -33,6 +33,11 @@ require([
             target: {y: 1, x: 4}
         },
         {
+            object: 'wizard1',
+            action: 'heal',
+            target: {y: 3, x: 1}
+        },
+        {
             object: 'archer1',
             action: 'die'
         }

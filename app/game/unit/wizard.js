@@ -21,6 +21,7 @@ define([
             Right: utils.range(32, 39),
             Down: utils.range(48, 55)
         };
+        this.healAnimation = utils.range(0, 24);
         this.sprite.animations.play(team == 1 ? 'stayRight' : 'stayLeft', 8, true);
     }
 
@@ -52,8 +53,8 @@ define([
         attack: function (point) {
             var self = this;
             var target = new Square(point.y, point.x);
-            var steps = 70;
-            var fireballSteps = 50;
+            var steps = 80;
+            var fireballSteps = 60;
             var deltaX = (target.getXCoord() - this.square.getXCoord()) / fireballSteps;
             var deltaY = (target.getYCoord() - this.square.getYCoord()) / fireballSteps;
             var direction = utils.getDirection(deltaY, deltaX);
@@ -63,18 +64,38 @@ define([
             return function () {
                 self.sprite.animations.play(castAnimation, 8, false);
                 steps--;
-                if (steps == 50) {
+                if (steps == fireballSteps) {
                     fireball = self.game.add.sprite(self.square.getXCoord(), self.square.getYCoord() + 32, 'fireball');
                     fireball.animations.add(direction, self.fireballAnimations[direction]);
                     fireball.animations.play(direction, 8, false);
                 }
-                if (steps < 50) {
+                if (steps < fireballSteps) {
                     fireball.x += deltaX;
                     fireball.y += deltaY;
                 }
                 if (steps == 0) {
                     self.sprite.animations.play(stayAnimation, 8, false);
                     fireball.kill();
+                    return false;
+                }
+                return true;
+            }
+        },
+
+        heal: function (point) {
+            var self = this;
+            var target = new Square(point.y, point.x);
+            var steps = 40;
+            var heal = null;
+            return function () {
+                if (steps == 40) {
+                    heal = self.game.add.sprite(target.getXCoord(), target.getYCoord(), 'heal');
+                    heal.animations.add('heal', self.healAnimation);
+                    heal.animations.play('heal', 25, false);
+                }
+                steps--;
+                if (steps == 0) {
+                    heal.kill();
                     return false;
                 }
                 return true;
