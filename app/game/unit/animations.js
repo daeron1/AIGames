@@ -25,6 +25,10 @@ define([
         shootLeft: utils.range(221, 233),
         shootDown: utils.range(234, 246),
         shootRight: utils.range(247, 259),
+        attackUp: utils.range(156, 161),
+        attackLeft: utils.range(169, 174),
+        attackDown: utils.range(182, 187),
+        attackRight: utils.range(195, 200),
         die: utils.range(260, 265)
     };
 

@@ -21,40 +21,40 @@ require([
 
     ];
     var steps = [
-        //{
-        //    object: 'archer2',
-        //    action: 'move',
-        //    target: {y: 4, x: 4}
-        //},
-        //{
-        //    object: 'archer2',
-        //    action: 'move',
-        //    target: {y: 1, x: 4}
-        //},
-        //{
-        //    object: 'archer2',
-        //    action: 'attack',
-        //    target: {y: 3, x: 1}
-        //},
-        //{
-        //    object: 'archer1',
-        //    action: 'attack',
-        //    target: {y: 1, x: 4}
-        //},
-        //{
-        //    object: 'wizard1',
-        //    action: 'attack',
-        //    target: {y: 1, x: 4}
-        //},
-        //{
-        //    object: 'wizard1',
-        //    action: 'heal',
-        //    target: {y: 3, x: 1}
-        //},
-        //{
-        //    object: 'archer1',
-        //    action: 'die'
-        //}
+        {
+            object: 'archer2',
+            action: 'move',
+            target: {y: 4, x: 4}
+        },
+        {
+            object: 'archer2',
+            action: 'move',
+            target: {y: 1, x: 4}
+        },
+        {
+            object: 'archer2',
+            action: 'attack',
+            target: {y: 3, x: 1}
+        },
+        {
+            object: 'archer1',
+            action: 'attack',
+            target: {y: 1, x: 4}
+        },
+        {
+            object: 'wizard1',
+            action: 'attack',
+            target: {y: 1, x: 4}
+        },
+        {
+            object: 'wizard1',
+            action: 'heal',
+            target: {y: 3, x: 1}
+        },
+        {
+            object: 'archer1',
+            action: 'die'
+        }
     ];
 
     params.setBarriers(trees);
