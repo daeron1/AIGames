@@ -1,5 +1,6 @@
 package game
 
+import game.unit.GameUnit
 
 
 class Game(units: List[GameUnit]) {
