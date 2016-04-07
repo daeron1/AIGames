@@ -10,10 +10,10 @@ require([
         {y: 2, x: 3},
         {y: 1, x: 7},
         {y: 2, x: 8},
-        {y: 3, x: 5},
-        {y: 5, x: 5},
-        {y: 3, x: 6},
-        {y: 5, x: 6},
+        //{y: 3, x: 5},
+        //{y: 5, x: 5},
+        //{y: 3, x: 6},
+        //{y: 5, x: 6},
         {y: 6, x: 3},
         {y: 7, x: 4},
         {y: 6, x: 8},
@@ -22,34 +22,72 @@ require([
     ];
     var steps = [
         {
-            object: 'archer2',
+            object: 'warrior2',
+            action: 'move',
+            target: {y: 4, x: 5}
+        },
+        {
+            object: 'warrior1',
             action: 'move',
             target: {y: 4, x: 4}
         },
         {
-            object: 'archer2',
-            action: 'move',
-            target: {y: 1, x: 4}
+            object: 'warrior1',
+            action: 'attack',
+            target: {y: 4, x: 5}
+        },
+        {
+            object: 'warrior2',
+            action: 'attack',
+            target: {y: 4, x: 4}
+        },
+        {
+            object: 'warrior1',
+            action: 'attack',
+            target: {y: 4, x: 5}
+        },
+        {
+            object: 'warrior2',
+            action: 'die'
         },
         {
             object: 'archer2',
             action: 'attack',
-            target: {y: 3, x: 1}
+            target: {y: 4, x: 4}
+        },
+        {
+            object: 'warrior1',
+            action: 'die'
+        },
+        {
+            object: 'archer1',
+            action: 'move',
+            target: {y: 3, x: 4}
+        },
+        {
+            object: 'archer2',
+            action: 'attack',
+            target: {y: 3, x: 4}
         },
         {
             object: 'archer1',
             action: 'attack',
-            target: {y: 1, x: 4}
+            target: {y: 3, x: 10}
         },
         {
-            object: 'wizard1',
+            object: 'archer2',
+            action: 'move',
+            target: {y: 2, x: 9}
+        },
+        {
+            object: 'archer1',
+            action: 'move',
+            target: {y: 3, x: 6}
+        },
+        {
+            object: 'wizard2',
             action: 'attack',
-            target: {y: 1, x: 4}
-        },
-        {
-            object: 'wizard1',
-            action: 'heal',
-            target: {y: 3, x: 1}
+            target: {y: 3, x: 6}
         },
         {
             object: 'archer1',

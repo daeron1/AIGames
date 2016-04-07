@@ -47,7 +47,7 @@ define([
         attack: function (point) {
             var self = this;
             var target = new Square(point.y, point.x);
-            var steps = 20;
+            var steps = 40;
             var deltaX = target.getXCoord() - this.square.getXCoord();
             var deltaY = target.getYCoord() - this.square.getYCoord();
             var direction = utils.getDirection(deltaY, deltaX);
