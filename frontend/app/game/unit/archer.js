@@ -25,6 +25,7 @@ define([
             var self = this;
             var target = null;
             var steps = 50;
+            var init = true;
             var deltaX = null;
             var deltaY = null;
             var direction = null;
@@ -32,7 +33,8 @@ define([
             var stayAnimation = '';
             return function () {
                 self.sprite.animations.play(moveAnimation, 8, true);
-                if (steps == 50) {
+                if (init) {
+                    init = false;
                     target = new Square(point.y, point.x);
                     steps = utils.getSteps(self.square, target);
                     deltaX = (target.getXCoord() - self.square.getXCoord()) / steps;
