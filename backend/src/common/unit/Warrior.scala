@@ -3,7 +3,16 @@ package common.unit
 import common.Position
 import common.unit.Warrior._
 
-class Warrior(position: Position) extends GameUnit(position, attack, distance, attackDistance, hp)
+case class Warrior(override val position: Position, override val hp: Int = Warrior.hp) extends GameUnit(position, hp, attack, distance, attackDistance) {
+
+  override def move(target: Position): GameUnit = {
+    new Warrior(target, hp)
+  }
+
+  override def attack(damage: Int): GameUnit = {
+    new Warrior(position, hp - damage)
+  }
+}
 
 object Warrior {
   val attack = 8
