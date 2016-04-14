@@ -1,7 +1,7 @@
-package game
+package common
 
 class Player {
-  import Player._
+  import common.Player._
   def unary_!(): Player = if (this == player1) player2 else this
 }
 

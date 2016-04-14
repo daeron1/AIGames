@@ -1,6 +1,7 @@
-package game
+package implementations
 
-import game.Player.player1
+import common.{Game, Player, Move}
+import Player.player1
 
 class MiniMax {
 
