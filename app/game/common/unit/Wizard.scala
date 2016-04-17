@@ -1,7 +1,7 @@
-package common.unit
+package game.common.unit
 
-import common.Position
-import common.unit.Wizard._
+import game.common.Position
+import game.common.unit.Wizard._
 
 case class Wizard(override val position: Position, override val hp: Int = Wizard.hp) extends GameUnit(position, hp, attack, distance, attackDistance) {
 

@@ -1,6 +1,6 @@
-package common.unit
+package game.common.unit
 
-import common.Position
+import game.common.Position
 
 abstract class GameUnit(val position: Position,
                         val hp: Int,

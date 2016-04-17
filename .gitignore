@@ -1,3 +1,4 @@
-/node_modules/*
 .idea/*
-*.iml
+logs
+target
+public/js/node_modules*
