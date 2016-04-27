@@ -7,8 +7,8 @@ define([
     function Square(y, x) {
         this.y = y;
         this.x = x;
-        this.xCoord = config.start_x + (x - 1) * config.square_width;
-        this.yCoord = config.start_y + (y - 1) * config.square_width;
+        this.xCoord = (x - 1) * config.square_width;
+        this.yCoord = (y - 1) * config.square_width;
     }
 
     Square.prototype = {

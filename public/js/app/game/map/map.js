@@ -11,9 +11,9 @@ define([
 
     function createEmptyBattlefield() {
         var battleField = [];
-        utils.range(1, 7).forEach(function (y) {
+        utils.range(1, 13).forEach(function (y) {
             battleField[y] = [];
-            utils.range(1, 10).forEach(function (x) {
+            utils.range(1, 20).forEach(function (x) {
                 battleField[y][x] = new Square(y, x);
             });
         });
@@ -42,17 +42,17 @@ define([
             });
 
             this.units = {
-                warrior1: new Warrior(this.game, this.getSquare(4, 2), 1),
-                archer1: new Archer(this.game, this.getSquare(3, 1), 1),
-                wizard1: new Wizard(this.game, this.getSquare(5, 1), 1),
-                warrior2: new Warrior(this.game, this.getSquare(4, 9), 2),
-                archer2: new Archer(this.game, this.getSquare(3, 10), 2),
-                wizard2: new Wizard(this.game, this.getSquare(5, 10), 2)
+                warrior1: new Warrior(this.game, this.getSquare(6, 2), 1),
+                archer1: new Archer(this.game, this.getSquare(5, 1), 1),
+                wizard1: new Wizard(this.game, this.getSquare(7, 1), 1),
+                warrior2: new Warrior(this.game, this.getSquare(6, 19), 2),
+                archer2: new Archer(this.game, this.getSquare(5, 20), 2),
+                wizard2: new Wizard(this.game, this.getSquare(7, 20), 2)
             };
         },
 
         loadAssets: function () {
-            this.game.load.image('terrain', 'assets/img/terrain.png');
+            this.game.load.image('terrain', 'assets/img/map.png');
             this.game.load.image('tree', 'assets/img/tree.png');
             this.game.load.spritesheet('warrior1', 'assets/img/warrior1.png', 64, 64);
             this.game.load.spritesheet('warrior2', 'assets/img/warrior2.png', 64, 64);
