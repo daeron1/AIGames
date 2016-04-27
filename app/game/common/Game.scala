@@ -22,7 +22,7 @@ case class Game(team1: List[GameUnit], team2: List[GameUnit]) {
               List(LEFT, RIGHT, UP, DOWN) map movement.nextMove
             } filter { movement =>
               val position = movement.target
-              Map.isPassable(position) && !occupied(position)
+              GameMap.isPassable(position) && !occupied(position)
             }
             val positions = moves.map(_.target).toSet
             bfs(occupied | positions, moves, moves ::: acc, depth - 1)

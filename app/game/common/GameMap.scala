@@ -2,7 +2,7 @@ package game.common
 
 import Config._
 
-object Map {
+object GameMap {
 
   def isPassable(position: Position): Boolean = {
     val (x, y) = (position.x, position.y)
