@@ -2,8 +2,8 @@ package game.common
 
 import java.lang.Math.{pow, sqrt}
 
-import game.common.Config.{gameHeight, gameWidth}
 import game.common.Player.player1
+import game.common.move.Direction._
 import game.common.move.{AttackMove, Move, Movement}
 import game.common.unit.{Archer, GameUnit, Warrior, Wizard}
 
@@ -13,27 +13,37 @@ case class Game(team1: List[GameUnit], team2: List[GameUnit]) {
   def getPossibleMovesFor(player: Player): List[Move] = {
     val (team, opponentsTeam) = if (player == player1) (team1, team2) else (team2, team1)
     team.flatMap(unit => {
+
       def getMovements(unit: GameUnit): Seq[Move] = {
-        import unit._
-        for (i <- position.x - distance to position.x + distance;
-             j <- position.y - distance to position.y + distance;
-             target = Position(i, j)
-             if i > 0 && i <= gameWidth
-             if j > 0 && j <= gameHeight
-             if !occupiedPositions(target)
-             if canBeReached(position, target, distance)) yield new Movement(target, unit, player)
+        def bfs(occupied: Set[Position], previousMvs: List[Movement], acc: List[Movement], depth: Int): List[Movement] = {
+          if (depth == 0) acc
+          else {
+            val moves = previousMvs flatMap { movement =>
+              List(LEFT, RIGHT, UP, DOWN) map movement.nextMove
+            } filter { movement =>
+              val position = movement.target
+              Map.isPassable(position) && !occupied(position)
+            }
+            val positions = moves.map(_.target).toSet
+            bfs(occupied | positions, moves, moves ::: acc, depth - 1)
+          }
+        }
+        val start = Movement(unit.position, unit, player, None)
+        bfs(occupiedPositions, List(start), List(), unit.distance)
       }
+
       def getAttackMoves(unit: GameUnit): Seq[Move] = {
         for (opponentUnit <- opponentsTeam
              if canBeReached(unit.position, opponentUnit.position, unit.attackDistance)) yield new AttackMove(opponentUnit, unit, player)
       }
+
       (getMovements(unit) ++ getAttackMoves(unit)).to[List]
     })
   }
 
   def make(move: Move): Game = {
     val (updatedTeam1, updatedTeam2): (List[GameUnit], List[GameUnit]) = move match {
-      case Movement(target, unit, player) =>
+      case Movement(target, unit, player, previousMove) =>
         val unitToUpdate = (if (player == player1) team1 else team2).find(_ == unit).get
         val updatedUnit = unitToUpdate move target
         (updateUnitList(team1, unitToUpdate, updatedUnit), updateUnitList(team2, unitToUpdate, updatedUnit))
