@@ -2,7 +2,7 @@ package game
 
 import game.common.Config.startPositions
 import game.common.Player._
-import game.common.move.{AttackMove, Move, Movement}
+import game.common.move.{AttackMove, DieMove, Move, Movement}
 import game.common.unit.{Archer, Warrior, Wizard}
 import game.common.{AI, Game, Player}
 
@@ -14,13 +14,21 @@ class Processor {
       if (game.isEnded) acc
       else {
         val move = getAi(game, player).findMove()
-        collectMoves(game make move, !player, move :: acc)
+        val moves: List[Move] = move match {
+          case attackMove: AttackMove =>
+            if (attackMove.targetUnit.hp - attackMove.unit.attack <= 0)
+              DieMove(attackMove.targetUnit, player) :: move :: acc
+            else move :: acc
+          case _ => move :: acc
+        }
+        collectMoves(game make move, !player, moves)
       }
     }
     collectMoves(createGame, player1, List()).reverse flatMap { move =>
       move match {
         case movement: Movement => movement.getPath
         case attackMove: AttackMove => List(attackMove)
+        case dieMove: DieMove => List(dieMove)
       }
     }
   }

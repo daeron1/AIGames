@@ -12,6 +12,7 @@ object Move {
     override def writes(o: Move): JsValue = o match {
       case movement: Movement => Json.toJson(movement)
       case attackMove: AttackMove => Json.toJson(attackMove)
+      case dieMove: DieMove => Json.toJson(dieMove)
     }
   }
 
