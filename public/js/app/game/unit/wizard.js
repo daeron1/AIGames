@@ -27,21 +27,34 @@ define([
 
     Wizard.prototype = {
 
-        move: function (point) {
+        move: function (point, last) {
             var self = this;
-            var target = new Square(point.y, point.x);
-            var steps = utils.getSteps(this.square, target);
-            var deltaX = (target.getXCoord() - this.square.getXCoord()) / steps;
-            var deltaY = (target.getYCoord() - this.square.getYCoord()) / steps;
-            var direction = utils.getDirection(deltaY, deltaX);
-            var moveAnimation = 'move' + direction;
-            var stayAnimation = 'stay' + direction;
-            this.square = target;
+            var target = null;
+            var steps = 50;
+            var init = true;
+            var deltaX = null;
+            var deltaY = null;
+            var direction = null;
+            var moveAnimation = '';
+            var stayAnimation = '';
             return function () {
-                self.sprite.animations.play(moveAnimation, 8, true);
+                if (init) {
+                    init = false;
+                    target = new Square(point.y, point.x);
+                    steps = 30;
+                    deltaX = (target.getXCoord() - self.square.getXCoord()) / steps;
+                    deltaY = (target.getYCoord() - self.square.getYCoord()) / steps;
+                    direction = utils.getDirection(deltaY, deltaX);
+                    moveAnimation = 'move' + direction;
+                    stayAnimation = 'stay' + direction;
+                    self.square = target;
+                    self.sprite.animations.play(moveAnimation, 8, true);
+                }
                 steps--;
                 if (steps == 0) {
-                    self.sprite.animations.play(stayAnimation, 8, false);
+                    if (last) {
+                        self.sprite.animations.play(stayAnimation, 8, false);
+                    }
                     return false;
                 }
                 self.sprite.x += deltaX;

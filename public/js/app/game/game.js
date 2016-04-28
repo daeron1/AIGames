@@ -38,7 +38,7 @@ define([
             this.actions = [];
             var self = this;
             params.steps.forEach(function (step) {
-                var action = self.map.units[step.object][step.action](step.target);
+                var action = self.map.units[step.object][step.action](step.target, step.last);
                 self.actions.push(action);
             });
 

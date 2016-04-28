@@ -8,7 +8,8 @@ import play.api.libs.json.{JsValue, Json, Writes}
 case class Movement(override val target: Position,
                     override val unit: GameUnit,
                     override val player: Player,
-                    previousMove: Option[Movement]) extends Move(target, unit, player) {
+                    previousMove: Option[Movement],
+                    lastMove: Boolean = false) extends Move(target, unit, player) {
 
   def nextMove(direction: Direction): Movement = {
     val newTarget = direction match {
@@ -25,7 +26,7 @@ case class Movement(override val target: Position,
       if (movement.previousMove.isEmpty) movement :: acc
       else buildPath(movement.previousMove.get, movement :: acc)
     }
-    buildPath(this, List())
+    buildPath(this.copy(lastMove = true), List())
   }
 
 }
@@ -35,7 +36,8 @@ object Movement {
     override def writes(movement: Movement): JsValue = Json.obj(
       "object" -> movement.unit.getName(movement.player),
       "action" -> "move",
-      "target" -> Json.toJson(movement.target)
+      "target" -> Json.toJson(movement.target),
+      "last" -> movement.lastMove
     )
   }
 }

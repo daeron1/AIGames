@@ -43,7 +43,7 @@ case class Game(team1: List[GameUnit], team2: List[GameUnit]) {
 
   def make(move: Move): Game = {
     val (updatedTeam1, updatedTeam2): (List[GameUnit], List[GameUnit]) = move match {
-      case Movement(target, unit, player, previousMove) =>
+      case Movement(target, unit, player, previousMove, lastMove) =>
         val unitToUpdate = (if (player == player1) team1 else team2).find(_ == unit).get
         val updatedUnit = unitToUpdate move target
         (updateUnitList(team1, unitToUpdate, updatedUnit), updateUnitList(team2, unitToUpdate, updatedUnit))

@@ -6,7 +6,7 @@ define([
     '../../helpers/utils'
 ], function (animations, Square, utils) {
 
-    function Archer (game, square, team) {
+    function Archer(game, square, team) {
         this.game = game;
         this.square = square;
         this.sprite = this.game.add.sprite(square.getXCoord(), square.getYCoord(), 'archer' + team);
@@ -21,7 +21,7 @@ define([
 
     Archer.prototype = {
 
-        move: function (point) {
+        move: function (point, last) {
             var self = this;
             var target = null;
             var steps = 50;
@@ -32,21 +32,23 @@ define([
             var moveAnimation = '';
             var stayAnimation = '';
             return function () {
-                self.sprite.animations.play(moveAnimation, 8, true);
                 if (init) {
                     init = false;
                     target = new Square(point.y, point.x);
-                    steps = utils.getSteps(self.square, target);
+                    steps = 30;
                     deltaX = (target.getXCoord() - self.square.getXCoord()) / steps;
                     deltaY = (target.getYCoord() - self.square.getYCoord()) / steps;
                     direction = utils.getDirection(deltaY, deltaX);
                     moveAnimation = 'move' + direction;
                     stayAnimation = 'stayArcher' + direction;
                     self.square = target;
+                    self.sprite.animations.play(moveAnimation, 8, true);
                 }
                 steps--;
                 if (steps == 0) {
-                    self.sprite.animations.play(stayAnimation, 8, false);
+                    if (last) {
+                        self.sprite.animations.play(stayAnimation, 8, false);
+                    }
                     return false;
                 }
                 self.sprite.x += deltaX;

@@ -2,7 +2,7 @@ package game.common
 
 class Player {
   import game.common.Player._
-  def unary_!(): Player = if (this == player1) player2 else this
+  def unary_!(): Player = if (this == player1) player2 else player1
   def getNumber: Int = if (this == player1) 1 else 2
 }
 
