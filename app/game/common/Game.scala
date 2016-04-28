@@ -18,8 +18,8 @@ case class Game(team1: List[GameUnit], team2: List[GameUnit]) {
         def bfs(occupied: Set[Position], previousMvs: List[Movement], acc: List[Movement], depth: Int): List[Movement] = {
           if (depth == 0) acc
           else {
-            val moves = previousMvs flatMap { movement =>
-              List(LEFT, RIGHT, UP, DOWN) map movement.nextMove
+            val moves = previousMvs flatMap {
+              List(LEFT, RIGHT, UP, DOWN) map _.nextMove
             } filter { movement =>
               val position = movement.target
               GameMap.isPassable(position) && !occupied(position)

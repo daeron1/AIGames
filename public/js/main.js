@@ -1,14 +1,15 @@
 'use strict';
 
 require([
+    'jquery',
     'app/game/params',
     'app/game/game'
-], function (params, Game) {
+], function ($, params, Game) {
 
     var trees = [
 
     ];
-    var steps = [
+   /* var steps = [
         {
             object: 'warrior2',
             action: 'move',
@@ -81,11 +82,20 @@ require([
             object: 'archer1',
             action: 'die'
         }
-    ];
+    ];*/
 
-    steps = [];
+
+    $.get('/game/simulate').done(function (steps) {
+        params.setBarriers(trees);
+        params.setSteps(steps);
+        var game = new Game();
+        game.start();
+
+    });
+/*
     params.setBarriers(trees);
     params.setSteps(steps);
     var game = new Game();
     game.start();
+*/
 });

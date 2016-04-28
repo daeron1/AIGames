@@ -1,7 +1,7 @@
 package game.common.unit
 
-import game.common.Position
 import game.common.unit.Archer._
+import game.common.{Player, Position}
 
 case class Archer(override val position: Position, override val hp: Int = Archer.hp) extends GameUnit(position, hp, attack, distance, attackDistance) {
 
@@ -13,6 +13,7 @@ case class Archer(override val position: Position, override val hp: Int = Archer
     new Archer(position, hp - damage)
   }
 
+  override def getName(player: Player): String = "archer" + player.getNumber
 }
 
 object Archer {

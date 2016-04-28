@@ -1,6 +1,6 @@
 package game.common.unit
 
-import game.common.Position
+import game.common.{Player, Position}
 
 abstract class GameUnit(val position: Position,
                         val hp: Int,
@@ -8,6 +8,7 @@ abstract class GameUnit(val position: Position,
                         val distance: Int,
                         val attackDistance: Int) {
 
+  def getName(player: Player): String
   def move(target: Position): GameUnit
   def attack(damage: Int): GameUnit
 }

@@ -3,6 +3,7 @@ package game.common.move
 import game.common.unit.GameUnit
 import game.common.{Player, Position}
 import game.common.move.Direction._
+import play.api.libs.json.{JsValue, Json, Writes}
 
 case class Movement(override val target: Position,
                     override val unit: GameUnit,
@@ -19,4 +20,22 @@ case class Movement(override val target: Position,
     Movement(newTarget, unit, player, Some(this))
   }
 
+  def getPath: List[Movement] = {
+    def buildPath(movement: Movement, acc: List[Movement]): List[Movement] = {
+      if (movement.previousMove.isEmpty) movement :: acc
+      else buildPath(movement.previousMove.get, movement :: acc)
+    }
+    buildPath(this, List())
+  }
+
+}
+
+object Movement {
+  implicit val movementWrites = new Writes[Movement] {
+    override def writes(movement: Movement): JsValue = Json.obj(
+      "object" -> movement.unit.getName(movement.player),
+      "action" -> "move",
+      "target" -> Json.toJson(movement.target)
+    )
+  }
 }
