@@ -13,8 +13,13 @@ class RandomAI(game: Game, player: Player) extends AI(game, player) {
     val attackMoves = moves filter(_.isInstanceOf[AttackMove])
     if (attackMoves.nonEmpty)
       getRandomMove(attackMoves)
-    else
-      getRandomMove(moves)
+    else {
+      val filtered = moves filter { move =>
+        val target = move.target
+        target.x >= 5 && target.x <= 15 && target.y >= 5 && target.x <= 15
+      }
+      getRandomMove(if (filtered.isEmpty) moves else filtered)
+    }
   }
 
   private def getRandomMove(list: List[Move]): Move = {
