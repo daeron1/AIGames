@@ -10,7 +10,7 @@ case class Wizard(override val position: Position, override val hp: Int = Wizard
   }
 
   override def attack(damage: Int): GameUnit = {
-    new Archer(position, hp - damage)
+    new Wizard(position, hp - damage)
   }
 
   override def getName(player: Player): String = "wizard" + player.getNumber
@@ -20,6 +20,6 @@ object Wizard {
   val attack = 10
   val heal = 6
   val distance = 4
-  val attackDistance = 1
+  val attackDistance = 5
   val hp = 80
 }

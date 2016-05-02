@@ -5,6 +5,7 @@ import game.common.Player._
 import game.common.move.{AttackMove, DieMove, Move, Movement}
 import game.common.unit.{Archer, Warrior, Wizard}
 import game.common.{AI, Game, Player}
+import game.implementations.RandomAI
 
 
 class Processor {
@@ -13,23 +14,21 @@ class Processor {
     def collectMoves(game: Game, player: Player, acc: List[Move]): List[Move] = {
       if (game.isEnded) acc
       else {
-        val move = getAi(game, player).findMove()
+        val move = new RandomAI(game, player).findMove()
         val moves: List[Move] = move match {
           case attackMove: AttackMove =>
             if (attackMove.targetUnit.hp - attackMove.unit.attack <= 0)
-              DieMove(attackMove.targetUnit, player) :: move :: acc
+              DieMove(attackMove.targetUnit, !player) :: move :: acc
             else move :: acc
           case _ => move :: acc
         }
         collectMoves(game make move, !player, moves)
       }
     }
-    collectMoves(createGame, player1, List()).reverse flatMap { move =>
-      move match {
-        case movement: Movement => movement.getPath
-        case attackMove: AttackMove => List(attackMove)
-        case dieMove: DieMove => List(dieMove)
-      }
+    collectMoves(createGame, player1, List()).reverse flatMap {
+      case movement: Movement => movement.getPath
+      case attackMove: AttackMove => List(attackMove)
+      case dieMove: DieMove => List(dieMove)
     }
   }
 

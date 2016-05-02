@@ -6,6 +6,7 @@ import game.common.Player.player1
 import game.common.move.Direction._
 import game.common.move.{AttackMove, Move, Movement}
 import game.common.unit.{Archer, GameUnit, Warrior, Wizard}
+import play.api.Logger
 
 
 case class Game(team1: List[GameUnit], team2: List[GameUnit]) {
@@ -55,6 +56,11 @@ case class Game(team1: List[GameUnit], team2: List[GameUnit]) {
         else
           (updateUnitList(team1, unitToUpdate, updatedUnit), updateUnitList(team2, unitToUpdate, updatedUnit))
     }
+    Logger.info(String.format("move for team %s - %s(%s, %s)",
+      if (move.player == player1) "player1" else "player2",
+      move.getClass.getName, move.unit, move.target))
+    Logger.info("team1 - " + updatedTeam1)
+    Logger.info("team2 - " + updatedTeam2)
     Game(updatedTeam1, updatedTeam2)
   }
 
@@ -67,7 +73,7 @@ case class Game(team1: List[GameUnit], team2: List[GameUnit]) {
     list map { case `oldUnit` => newUnit; case any => cloneUnit(any) }
 
   private def removeUnitFromList(list: List[GameUnit], unit: GameUnit): List[GameUnit] =
-    list filter (_ != unit) map (cloneUnit(_))
+    list filter (_ != unit) map cloneUnit
 
   private def cloneUnit(unit: GameUnit): GameUnit = unit match {
     case Warrior(position, hp) => new Warrior(position, hp)
