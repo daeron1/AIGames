@@ -49,8 +49,8 @@ define([
         var x = Math.abs(from.getX() - to.getX());
         var y = Math.abs(from.getY() - to.getY());
         var d = Math.sqrt(x * x + y * y);
-        return Math.round(d) * 50;
-    }
+        return Math.round(d) * 10;
+    };
 
     utils.getDirection = function (y, x) {
         var tan = Math.abs(y) / Math.abs(x);

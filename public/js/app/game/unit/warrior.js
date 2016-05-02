@@ -24,7 +24,7 @@ define([
         move: function (point, last) {
             var self = this;
             var target = null;
-            var steps = 50;
+            var steps = null;
             var init = true;
             var deltaX = null;
             var deltaY = null;

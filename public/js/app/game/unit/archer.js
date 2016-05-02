@@ -24,7 +24,7 @@ define([
         move: function (point, last) {
             var self = this;
             var target = null;
-            var steps = 50;
+            var steps = null;
             var init = true;
             var deltaX = null;
             var deltaY = null;
@@ -60,8 +60,9 @@ define([
         attack: function (point) {
             var self = this;
             var target = null;
-            var steps = 70;
-            var arrowSteps = 50;
+            var steps = null;
+            var arrowSteps = null;
+            var init = true;
             var deltaX = null;
             var deltaY = null;
             var direction = null;
@@ -70,19 +71,22 @@ define([
             var arrow = null;
             return function () {
                 self.sprite.animations.play(shootAnimation, 8, false);
-                if (steps == 70) {
+                if (init) {
+                    init = false;
                     target = new Square(point.y, point.x);
+                    steps = utils.getSteps(target, self.square);
+                    steps = (steps < 10) ? 30 : steps;
+                    arrowSteps = steps - 20;
                     deltaX = (target.getXCoord() - self.square.getXCoord()) / arrowSteps;
                     deltaY = (target.getYCoord() - self.square.getYCoord()) / arrowSteps;
                     direction = utils.getDirection(deltaY, deltaX);
                     shootAnimation = 'shoot' + direction;
                     stayAnimation = 'stayArcher' + direction;
                 }
-                steps--;
-                if (steps == 50) {
+                if (steps == arrowSteps) {
                     arrow = self.game.add.sprite(self.square.getXCoord(), self.square.getYCoord() + 32, 'arrow' + direction);
                 }
-                if (steps < 50) {
+                if (steps < arrowSteps) {
                     arrow.x += deltaX;
                     arrow.y += deltaY;
                 }
@@ -91,6 +95,7 @@ define([
                     arrow.kill();
                     return false;
                 }
+                steps--;
                 return true;
             }
         },

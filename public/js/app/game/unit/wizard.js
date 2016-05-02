@@ -30,7 +30,7 @@ define([
         move: function (point, last) {
             var self = this;
             var target = null;
-            var steps = 50;
+            var steps = null;
             var init = true;
             var deltaX = null;
             var deltaY = null;
@@ -65,18 +65,30 @@ define([
 
         attack: function (point) {
             var self = this;
-            var target = new Square(point.y, point.x);
-            var steps = 80;
-            var fireballSteps = 60;
-            var deltaX = (target.getXCoord() - this.square.getXCoord()) / fireballSteps;
-            var deltaY = (target.getYCoord() - this.square.getYCoord()) / fireballSteps;
-            var direction = utils.getDirection(deltaY, deltaX);
-            var castAnimation = 'cast' + direction;
+            var target = null;
+            var steps = null;
+            var fireballSteps = null;
+            var init = true;
+            var deltaX = null;
+            var deltaY = null;
+            var direction = null;
+            var shootAnimation = 'cast' + direction;
             var stayAnimation = 'stay' + direction;
             var fireball = null;
             return function () {
-                self.sprite.animations.play(castAnimation, 8, false);
-                steps--;
+                self.sprite.animations.play(shootAnimation, 8, false);
+                if (init) {
+                    init = false;
+                    target = new Square(point.y, point.x);
+                    steps = utils.getSteps(target, self.square);
+                    steps = (steps < 10) ? 25 : steps;
+                    fireballSteps = steps - 20;
+                    deltaX = (target.getXCoord() - self.square.getXCoord()) / fireballSteps;
+                    deltaY = (target.getYCoord() - self.square.getYCoord()) / fireballSteps;
+                    direction = utils.getDirection(deltaY, deltaX);
+                    shootAnimation = 'cast' + direction;
+                    stayAnimation = 'stay' + direction;
+                }
                 if (steps == fireballSteps) {
                     fireball = self.game.add.sprite(self.square.getXCoord(), self.square.getYCoord() + 32, 'fireball');
                     fireball.animations.add(direction, self.fireballAnimations[direction]);
@@ -91,6 +103,7 @@ define([
                     fireball.kill();
                     return false;
                 }
+                steps--;
                 return true;
             }
         },
@@ -98,10 +111,13 @@ define([
         heal: function (point) {
             var self = this;
             var target = new Square(point.y, point.x);
-            var steps = 40;
+            var steps = null;
+            var init = true;
             var heal = null;
             return function () {
-                if (steps == 40) {
+                if (init) {
+                    init = false;
+                    steps = 40;
                     heal = self.game.add.sprite(target.getXCoord(), target.getYCoord(), 'heal');
                     heal.animations.add('heal', self.healAnimation);
                     heal.animations.play('heal', 25, false);
