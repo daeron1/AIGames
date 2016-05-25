@@ -81,7 +81,7 @@ define([
                     init = false;
                     target = new Square(point.y, point.x);
                     steps = utils.getSteps(target, self.square);
-                    steps = (steps < 10) ? 25 : steps;
+                    steps = (steps < 10) ? 30 : steps;
                     fireballSteps = steps - 20;
                     deltaX = (target.getXCoord() - self.square.getXCoord()) / fireballSteps;
                     deltaY = (target.getYCoord() - self.square.getYCoord()) / fireballSteps;

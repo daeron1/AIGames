@@ -56,11 +56,6 @@ case class Game(team1: List[GameUnit], team2: List[GameUnit]) {
         else
           (updateUnitList(team1, unitToUpdate, updatedUnit), updateUnitList(team2, unitToUpdate, updatedUnit))
     }
-    Logger.info(String.format("move for team %s - %s(%s, %s)",
-      if (move.player == player1) "player1" else "player2",
-      move.getClass.getName, move.unit, move.target))
-    Logger.info("team1 - " + updatedTeam1)
-    Logger.info("team2 - " + updatedTeam2)
     Game(updatedTeam1, updatedTeam2)
   }
 
